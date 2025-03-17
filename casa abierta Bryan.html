@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitio Web de Fútbol</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .section {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1 id="titulo" style="font-size: 3em;">Hola :]</h1>
+    </div>
+    <div class="section">
+        <div id="animacion1"></div>
+    </div>
+    <div class="section">
+        <div id="animacion2"></div>
+    </div>
+
+    <script>
+        // Animación del título
+        let colores = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
+        let indiceColor = 0;
+
+        function setup() {
+            let canvas1 = createCanvas(0, 0);
+            canvas1.parent('animacion1');
+            let canvas2 = createCanvas(600, 400);
+            canvas2.parent('animacion2');
+            frameRate(30);
+        }
+
+        function draw() {
+            // Animación del título
+            let titulo = document.getElementById('titulo');
+            titulo.style.color = colores[indiceColor];
+            indiceColor = (indiceColor + 1) % colores.length;
+
+            // Animación del balón y el cuadrado
+            background(200);
+            fill(255, 0, 0);
+            ellipse(ballX, ballY, 30, 30); // Balón
+            fill(0, 0, 255);
+            rect(playerX, playerY, 50, 50); // Cuadrado
+            ballY += ballSpeed;
+            if (ballY > height || ballY < 0) {
+                ballSpeed *= -1;
+            }
+        }
+
+        let ballX = 300;
+        let ballY = 200;
+        let ballSpeed = 2;
+        let playerX = 100;
+        let playerY = 350;
+        let playerSpeed = 5;
+        let jump = false;
+
+        function keyPressed() {
+            if (key === 'd' || key === 'D') {
+                playerX += playerSpeed;
+            } else if (key === 'a' || key === 'A') {
+                playerX -= playerSpeed;
+            } else if (key === 'w' || key === 'W') {
+                if (!jump) {
+                    playerY -= 100;
+                    jump = true;
+                }
+            }
+        }
+
+        function keyReleased() {
+            if (key === 'w' || key === 'W') {
+                playerY += 100;
+                jump = false;
+            }
+        }
+    </script>
+</body>
+</html>
